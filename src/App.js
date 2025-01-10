@@ -3,17 +3,20 @@ import './App.css';
 import AddExpenseForm from './components/AddExpenseForm';
 import ExpenseList from './components/ExpenseList';
 
-
-function addExpense(){
-  const[expenses, SetExpense] = useState([]);
+function AddExpenseComponent() {
+  const [expenses, setExpenses] = useState([]);
   const addExpense = (expense) => {
-    SetExpense([...expense, expense]);
+    setExpenses([...expenses, expense]);
   };
+  const deleteExpense = (id) => {
+    setExpenses(expenses.filter((expense) => expense.id !== id));
+  } ;
   return (
     <div>
       <AddExpenseForm onAddExpense={addExpense} />
-      <ExpenseList expenses={expenses} />
+      <ExpenseList expenses={expenses} onDelete={deleteExpense} />
     </div>
   );
 }
-export default addExpense;
+
+export default AddExpenseComponent;
