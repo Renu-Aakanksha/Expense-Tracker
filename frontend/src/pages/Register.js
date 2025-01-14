@@ -1,5 +1,6 @@
-// src/pages/Register.js
+
 import React, { useState } from 'react';
+import '../view/register.css';
 
 function Register(){
     const [fname, setFname] = useState('');
@@ -9,7 +10,7 @@ function Register(){
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [budget, setBudget] = useState(0);
+
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
@@ -26,11 +27,19 @@ function Register(){
         return;
         }
 
+         // Password validation
+        const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!passwordRegex.test(password)) {
+            setError('Password must be at least 8 characters long, contain one uppercase letter, one number, and one special character.');
+            return;
+        }
+
         // Clear previous error
         setError('');
 
         try {
-        const response = await fetch('http://localhost:3000/api/register', {
+        
+        const response = await fetch('http://localhost:3002/api/register', {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json',
@@ -41,6 +50,7 @@ function Register(){
         const data = await response.json();
 
         if (response.ok) {
+          
             setSuccess(data.message);
             setFname('');
             setLname('');
@@ -48,13 +58,13 @@ function Register(){
             setEmail('');
             setPhone('');
             setPassword('');
-            setConfirmPassword('');
-            setBudget(10000);
+            setConfirmPassword('')
+          
         } else {
             setError(data.message || 'Registration failed.');
         }
         } catch (err) {
-            console.error('Error:', err);
+            console.error('reg Error:', err);
             setError('Server error.');
         }
     };

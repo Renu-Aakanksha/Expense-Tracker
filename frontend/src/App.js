@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './App.css';
 import AddExpenseForm from './components/AddExpenseForm';
 import ExpenseList from './components/ExpenseList';
@@ -13,6 +14,9 @@ function AddExpenseComponent() {
   } ;
   return (
     <div>
+       <nav>
+        <Link to="/register">Register</Link>
+      </nav>
       <AddExpenseForm onAddExpense={addExpense} />
       <ExpenseList expenses={expenses} onDelete={deleteExpense} />
     </div>
